@@ -1,8 +1,11 @@
+'use client'
 import { Providers } from './providers'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 
-export const metadata = {
-  title: 'wagmi',
-}
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
@@ -11,8 +14,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <Providers>{children}</Providers>
+      <body className={inter.className}>
+        <Providers>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', height: '100vh'}}>
+            <Header />
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+              {children}
+            </div>
+            <Footer />
+          </div>
+        </Providers>
       </body>
     </html>
   )

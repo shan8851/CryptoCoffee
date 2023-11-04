@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-start-rgb: 255, 243, 224; /* Creamy Latte */
+  --background-end-rgb: 250, 240, 230; /* Gentle Cream */
+  --foreground-rgb: 75, 54, 33; /* Espresso Dark */
+  --button-rgb: 139, 87, 42; /* Brewed Caramel */
+  --button-hover-rgb: 109, 76, 60; /* Roasted Mocha */
+  --accent-rgb: 210, 166, 121; /* Frothy Cappuccino */
+  --secondary-text-rgb: 250, 240, 230; /* Gentle Cream */
+}
+
+body {
+  --tw-text-opacity: 1;
+  color: rgba(var(--foreground-rgb), var(--tw-text-opacity));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(var(--background-end-rgb), var(--tw-bg-opacity, 1))
+    )
+    rgba(var(--background-start-rgb), var(--tw-bg-opacity, 1));
+}
+
+button {
+  --tw-bg-opacity: 1;
+  background-color: rgba(var(--button-rgb), var(--tw-bg-opacity));
+  color: #fff; /* For better contrast on buttons */
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+button:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(var(--button-hover-rgb), var(--tw-bg-opacity));
+  cursor: pointer;
+}
+
+button:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.accent {
+  --tw-text-opacity: 1;
+  color: rgba(var(--accent-rgb), var(--tw-text-opacity));
+}
+
+.secondary-text {
+  --tw-text-opacity: 1;
+  color: rgba(var(--secondary-text-rgb), var(--tw-text-opacity));
+}
+
+a {
+  --tw-text-opacity: 1;
+  color: rgba(var(--button-rgb), var(--tw-text-opacity));
+  font-weight: 700;;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+input {
+  --tw-text-opacity: 1;
+  color: rgba(var(--foreground-rgb), var(--tw-text-opacity));
+  background-color: rgba(var(--background-end-rgb), var(--tw-bg-opacity));
+  border: 2px solid rgba(var(--button-rgb));
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+input:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+.secondaryButton {
+  color: rgba(var(--button-hover-rgb), var(--tw-bg-opacity));
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.secondaryButton:hover {
+  text-decoration: underline;
+}
