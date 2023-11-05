@@ -1,17 +1,17 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import abi from '../contracts/abi.json'
-import { useContractEvent, useContractWrite } from "wagmi";
+import { useContractEvent, useContractWrite, useWaitForTransaction } from "wagmi";
 import { parseEther } from "viem";
 import { FiCoffee } from 'react-icons/fi'
 import Confetti from 'react-dom-confetti';
 
-const config = {
+const cconfettiConfig = {
   angle: 90,
   spread: 360,
   startVelocity: 40,
   elementCount: 70,
   dragFriction: 0.12,
-  duration: 4000,
+  duration: 6000,
   stagger: 3,
   width: "10px",
   height: "10px",
@@ -34,23 +34,31 @@ export const Tip = () => {
   const [dollarAmount, setDollarAmount] = useState('');
   const [ethPrice, setEthPrice] = useState<string | null>(null);
   const [ethAmount, setEthAmount] = useState('');
-  const [success, setSuccess] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   useContractEvent({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS! as `0x${string}`,
     abi,
     eventName: 'CoffeePurchased',
-    listener() {
-      setSuccess(true);
+    listener(log) {
+      console.debug('STATE CoffeePurchased event:', log)
     },
   })
 
-  const { data, isLoading, isSuccess, write } = useContractWrite({
+  const { data, write, error, isError, reset } = useContractWrite({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS! as `0x${string}`,
     abi,
     functionName: 'buyCoffee',
-    onSuccess() {
-      setEthPrice(null);
+  })
+
+    const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+    onSuccess(data) {
       setDollarAmount('');
+      reset();
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 5000);
     }
   })
 
@@ -79,12 +87,17 @@ export const Tip = () => {
 
   const handleDollarAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     const amount = e.target.value;
+    setShowSuccessMessage(false);
     if (!isNaN(Number(amount))) {
       setDollarAmount(amount);
     }
   };
 
   const etherscanLink = `https://sepolia.etherscan.io/tx/${data?.hash}`;
+  const successMessage =
+     <p style={{ maxWidth: 500, textAlign: 'center'}}>Cheers for the ☕! You can chck out the transaction on <a href={etherscanLink} target="_blank" rel="noreferrer">etherscan</a>.</p>;
+
+  const isButtonDisabled = !ethPrice || !dollarAmount || isLoading;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -98,14 +111,14 @@ export const Tip = () => {
           />
            <button
             style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', margin: 16 }}
-            disabled={!ethPrice || !dollarAmount || !write}
+            disabled={isButtonDisabled}
             onClick={() => {
               if (!ethPrice) return;
               write({ value: parseEther(ethAmount as `${number}`)})
             }}
           >
             <FiCoffee  />
-            BUY
+            {isLoading ? 'Brewing...' : 'Buy Coffee'}
           </button>
         </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, height: 32 }}>
@@ -113,11 +126,11 @@ export const Tip = () => {
           <p style={{ color: '#6D4C3C', fontWeight: 700 }}>$ in ETH: {ethAmount}</p>
         )}
       </div>
-      {isLoading && <div>Please confirm your donation in MetaMask</div>}
-      {isSuccess && (
-        <p style={{ maxWidth: 500, textAlign: 'center'}}>Thanks for the brew! Your transaction is pending, you can chck ot on on <a href={etherscanLink} target="_blank" rel="noreferrer">etherscan</a>. Alternatively stay on the page to get confirmation when it completes</p>
-      )}
-      <Confetti active={success} config={config}/>
+      <div style={{ height: 60 }}>
+        {showSuccessMessage && successMessage}
+      </div>
+      <Confetti active={showSuccessMessage} config={cconfettiConfig}/>
+      {(isError) && <p>{error?.message}</p>}
     </div>
   );
 };

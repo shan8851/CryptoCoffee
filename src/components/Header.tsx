@@ -16,7 +16,7 @@ export const Header = () => {
           .filter((x) => x.ready && x.id !== connector?.id)
           .map((x) => (
             <button style={{ margin: 16 }} key={x.id} onClick={() => connect({ connector: x })}>
-              {x.name}
+              {`Connect with ${x.name}`}
               {isLoading && x.id === pendingConnector?.id && ' (connecting)'}
             </button>
           ))}
