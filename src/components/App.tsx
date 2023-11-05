@@ -13,7 +13,7 @@ export const App = () => {
     alignItems: 'center',
     justifyContent: 'center',
    }}>
-      <h1 style={{ fontWeight: 900, fontSize: '4rem', display: 'flex', alignItems: 'center', gap: 4 }}>
+      <h1 style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
         <GiCoffeeBeans />
         CryptoCoffee
       </h1>
