@@ -40,8 +40,7 @@ export const Tip = () => {
     abi,
     eventName: 'CoffeePurchased',
     listener(log) {
-      console.debug('STATE CoffeePurchased event:', log)
-    },
+      console.log('CoffeePurchased event:', log)},
   })
 
   const { data, write, error, isError, reset } = useContractWrite({
