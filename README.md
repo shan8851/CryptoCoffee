@@ -1,3 +1,5 @@
+> :warning: **Attention**: CryptoCoffee is currently operating on the Ethereum testnet (sepolia). Transactions do not involve real funds and are for demonstration purposes only.
+
 # CryptoCoffee ☕️
 
 Hey there! I'm Shan, a software engineer and mentor who loves to share knowledge about React, Typescript, and all things crypto over a good cup of coffee. CryptoCoffee is a way for my mentees or anybody who finds my content useful to give back.
