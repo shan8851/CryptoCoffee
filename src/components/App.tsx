@@ -18,8 +18,8 @@ export const App = () => {
         CryptoCoffee
       </h1>
       <p style={{ marginBottom: 8, fontSize: '1.25rem' }}>Give back with a crypto brew!</p>
-      <Coffees />
       <Connected>
+        <Coffees />
         <Tip />
       </Connected>
    </div>
