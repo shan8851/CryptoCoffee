@@ -32,7 +32,9 @@ Simple as that!
 
 More of a Bitcoin fan? No problem! You can also show your support by donating Bitcoin directly to my wallet:
 
-`ADD_BTC_ADDRESS`
+```
+bc1qqfly5054cegquc7kd7vrkhdz35de55d3zrfye5
+```
 
 ## Get In Touch
 
